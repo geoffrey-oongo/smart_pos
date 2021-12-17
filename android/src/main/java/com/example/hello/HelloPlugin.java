@@ -71,9 +71,12 @@ public class HelloPlugin implements FlutterPlugin, MethodCallHandler {
       String famerName = call.argument("farmerName");
       String transactionId = call.argument("transactionId");
       String date = call.argument("date");
+      String no = call.argument("no");
       String weight = call.argument("weight");
       String totalWeight = call.argument("totalWeight");
-      _print(result, transactionId, famerName, date, weight, totalWeight);
+      String clerk = call.argument("clerk");
+      String variety = call.argument("variety");
+      _print(result, transactionId, famerName, date, weight, totalWeight, clerk, variety,no);
     } else {
       result.notImplemented();
     }
@@ -86,7 +89,7 @@ public class HelloPlugin implements FlutterPlugin, MethodCallHandler {
   }
 
   private void _print(Result result, String transactionId, String farmer, String date, String weight,
-      String totalWeight) {
+      String totalWeight, String clerk, String variety, String no) {
 
     int printStatus = mPrinter.getPrinterStatus();
     if (printStatus == SdkResult.SDK_PRN_STATUS_PAPEROUT) {
@@ -97,6 +100,8 @@ public class HelloPlugin implements FlutterPlugin, MethodCallHandler {
       format.setStyle(PrnTextStyle.BOLD);
 
       format.setFont(PrnTextFont.DEFAULT);
+      mPrinter.setPrintAppendString("NGOMANO FC.S LTD", format);
+      mPrinter.setPrintAppendString("--------------------------------- ", format);
       mPrinter.setPrintAppendString("Transaction Ticket", format);
       format.setTextSize(25);
       format.setStyle(PrnTextStyle.NORMAL);
@@ -104,8 +109,11 @@ public class HelloPlugin implements FlutterPlugin, MethodCallHandler {
       mPrinter.setPrintAppendString(" ", format);
       mPrinter.setPrintAppendString("#Ref" + transactionId, format);
       mPrinter.setPrintAppendString("Farmer:" + farmer, format);
-      mPrinter.setPrintAppendString("weight:" + weight + " " + "KG", format);
-      mPrinter.setPrintAppendString("OPERATOR NO:" + " 01 ", format);
+      mPrinter.setPrintAppendString("Farmer no:" + no, format);
+      mPrinter.setPrintAppendString("Date: " + date, format);
+      mPrinter.setPrintAppendString("weight: " + weight + " " + "KG", format);
+      mPrinter.setPrintAppendString("OPERATOR :" + clerk, format);
+      mPrinter.setPrintAppendString("Variety :" + variety, format);
       mPrinter.setPrintAppendString("--------------------------------- ", format);
 
       format.setTextSize(30);
@@ -118,8 +126,7 @@ public class HelloPlugin implements FlutterPlugin, MethodCallHandler {
       mPrinter.setPrintAppendString(" -----------------------------", format);
       mPrinter.setPrintAppendString(" ", format);
       mPrinter.setPrintAppendString(" ", format);
-      mPrinter.setPrintAppendString(" ", format);
-      mPrinter.setPrintAppendString(" ", format);
+     
       mPrinter.setPrintStart();
     }
     result.success(true);

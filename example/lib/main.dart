@@ -20,8 +20,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> printer() async {
     try {
-      await Hello.printText(DateTime.now().toString(), '70', '1000',
-          'Geoffrey Oongo', 'AEA/TTY/IOOUY/008/09/00');
+      await Hello.printTxReceipt('', '', '', '', '', '', '', '');
     } on PlatformException {
       print('errrr');
     } catch (e) {

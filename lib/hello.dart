@@ -10,14 +10,25 @@ class Hello {
     return version;
   }
 
-  static Future<bool> printText(String transDate, String weight,
-      String totalWeight, String farmerName, String transactionId) async {
+  static Future<bool> printTxReceipt(
+      String transDate,
+      String weight,
+      String totalWeight,
+      String farmerName,
+      String transactionId,
+      String clerk,
+      String variety,
+      String farmerNo
+      ) async {
     Map<String, String> params = {
+      'no' :farmerNo,
+      'variety' :variety,
       'date': transDate,
       'weight': weight,
       'totalWeight': totalWeight,
       'farmerName': farmerName,
-      'transactionId': transactionId
+      'transactionId': transactionId,
+      'clerk': clerk
     };
     final bool returned = await _channel.invokeMethod('obtainPrint', params);
     return returned;
